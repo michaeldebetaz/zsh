@@ -1,0 +1,5 @@
+./plugins
+.zcompdump*
+.zsh_history
+plugins
+%ln
