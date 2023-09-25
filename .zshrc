@@ -31,7 +31,6 @@ setopt inc_append_history     # add commands to HISTFILE in order of execution
 # Set up your shell to use Starship
 eval "$(starship init zsh)"
 
-
 # Custom aliases
 alias zshc="cd ~/.config/zsh"
 alias nvimc="cd ~/.config/nvim"
