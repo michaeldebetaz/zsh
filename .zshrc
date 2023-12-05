@@ -35,3 +35,4 @@ eval "$(starship init zsh)"
 alias zshc="cd ~/.config/zsh"
 alias nvimc="cd ~/.config/nvim"
 
+source "~/.profile"
