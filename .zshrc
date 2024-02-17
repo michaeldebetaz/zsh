@@ -36,7 +36,16 @@ setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 setopt inc_append_history     # add commands to HISTFILE in order of execution
 
-# STARSHIP
+# Key bindings
+# ctrl+arrows
+bindkey "\e[1;5C" forward-word
+bindkey "\e[1;5D" backward-word
+# ctrl+delete
+bindkey "\e[3;5~" kill-word
+# ctrl+backspace
+bindkey '^H' backward-kill-word
+# ctrl+shift+delete
+bindkey "\e[3;6~" kill-line
 
 # Custom aliases
 alias zshc="cd ~/.config/zsh"
