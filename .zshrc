@@ -21,7 +21,11 @@ load_nvm() {
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 }
-znap function nvm npm load_nvm
+znap function nvm load_nvm
+znap function npm load_nvm
+znap function node load_nvm
+znap function npx load_nvm
+znap function nvim load_nvm
 
 # History file configuration
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
