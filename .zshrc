@@ -7,9 +7,8 @@
 source ~/.config/zsh/plugins/znap/znap.zsh  # Start Znap
 
 # Set up your shell to use Starship
-znap eval starship 'starship init zsh --print-full-init'
-prompt_starship_precmd
-znap prompt
+export STARSHIP_CONFIG=~/.config/zsh/starship.toml
+eval "$(starship init zsh)"
 
 # Install and update plugins
 znap source marlonrichert/zsh-autocomplete
