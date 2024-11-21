@@ -50,6 +50,7 @@ bindkey "\e[3;6~" kill-line
 alias zshc="cd ~/.config/zsh"
 alias nvimc="cd ~/.config/nvim"
 alias tmuxc="cd ~/.config/tmux"
+alias ls="ls --color=auto"
 
 source ~/.profile
 
