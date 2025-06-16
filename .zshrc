@@ -11,9 +11,12 @@ export STARSHIP_CONFIG=~/.config/zsh/starship.toml
 eval "$(starship init zsh)"
 
 # Install and update plugins
-znap source marlonrichert/zsh-autocomplete
 znap source zsh-users/zsh-autosuggestions
 bindkey '^ ' autosuggest-accept # Ctrl + Space to accept suggestion
+
+znap source marlonrichert/zsh-autocomplete
+zstyle ':completion:*' completer _complete _complete:-fuzzy _correct _approximate _ignored
+zstyle ':autocomplete:tab:*' fzf-completion yes
 
 load_nvm() {
     export NVM_DIR="$HOME/.nvm"
