@@ -1,5 +1,8 @@
 # zmodload zsh/zprof
 
+# Load environment variables first
+[[ -f ~/.profile ]] && source ~/.profile
+
 # Download Znap, if it's not there yet.
 [[ -r ~/.config/zsh/plugins/znap/znap.zsh ]] ||
     git clone --depth 1 -- \
@@ -15,7 +18,12 @@ znap source zsh-users/zsh-autosuggestions
 bindkey '^ ' autosuggest-accept # Ctrl + Space to accept suggestion
 
 znap source marlonrichert/zsh-autocomplete
-zstyle ':completion:*' completer _complete _complete:-fuzzy _correct _approximate _ignored
+# zstyle ':completion:*' completer _complete _complete:-fuzzy _correct _approximate _ignored
+# Fix freezes when using completion with certain commands
+# Source: https://github.com/marlonrichert/zsh-autocomplete/issues/736#issuecomment-4038581094
+# zstyle ':completion:list-choices:*:(apt|git-clone|pacman|rsync|yay):*' tag-order -
+builtin zstyle ':completion:*:*:*:*' completer \
+    _expand _complete _prefix _correct _ignored
 zstyle ':autocomplete:tab:*' fzf-completion yes
 
 load_nvm() {
@@ -24,6 +32,12 @@ load_nvm() {
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 }
 znap function nvm npm node npx nvim pm2 air task load_nvm
+
+# Cache and evaluate the string output asynchronously
+znap eval bun-completions 'bun completions'
+
+# Cache Docker completions via Znap
+znap fpath _docker 'docker completion zsh'
 
 # History file configuration
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
@@ -37,6 +51,7 @@ setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 setopt inc_append_history     # add commands to HISTFILE in order of execution
+
 
 # Key bindings
 # ctrl+arrows
@@ -54,7 +69,5 @@ alias zshc="cd ~/.config/zsh"
 alias nvimc="cd ~/.config/nvim"
 alias tmuxc="cd ~/.config/tmux"
 alias ls="ls --color=auto"
-
-source ~/.profile
 
 # zprof
