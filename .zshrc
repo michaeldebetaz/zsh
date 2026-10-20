@@ -1,43 +1,27 @@
-# zmodload zsh/zprof
-
 # Load environment variables first
 [[ -f ~/.profile ]] && source ~/.profile
 
-# Download Znap, if it's not there yet.
-[[ -r ~/.config/zsh/plugins/znap/znap.zsh ]] ||
-    git clone --depth 1 -- \
-        https://github.com/marlonrichert/zsh-snap.git ~/.config/zsh/plugins/znap
-source ~/.config/zsh/plugins/znap/znap.zsh  # Start Znap
+# where do you want to store your plugins?
+ZPLUGINDIR=${ZPLUGINDIR:-${ZDOTDIR:-$HOME/.config/zsh}/plugins}
 
-# Set up your shell to use Starship
-export STARSHIP_CONFIG=~/.config/zsh/starship.toml
-eval "$(starship init zsh)"
+# get zsh_unplugged and store it with your other plugins
+if [[ ! -d $ZPLUGINDIR/zsh_unplugged ]]; then
+  git clone --quiet https://github.com/mattmc3/zsh_unplugged $ZPLUGINDIR/zsh_unplugged
+fi
+source $ZPLUGINDIR/zsh_unplugged/zsh_unplugged.zsh
 
-# Install and update plugins
-znap source zsh-users/zsh-autosuggestions
-bindkey '^ ' autosuggest-accept # Ctrl + Space to accept suggestion
+# make a github repo plugins list
+plugins=(
+  "sindresorhus/pure"
+  "zsh-users/zsh-autosuggestions"
+  "zsh-users/zsh-history-substring-search"
+  "mattmc3/ez-compinit"
 
-znap source marlonrichert/zsh-autocomplete
-# zstyle ':completion:*' completer _complete _complete:-fuzzy _correct _approximate _ignored
-# Fix freezes when using completion with certain commands
-# Source: https://github.com/marlonrichert/zsh-autocomplete/issues/736#issuecomment-4038581094
-# zstyle ':completion:list-choices:*:(apt|git-clone|pacman|rsync|yay):*' tag-order -
-builtin zstyle ':completion:*:*:*:*' completer \
-    _expand _complete _prefix _correct _ignored
-zstyle ':autocomplete:tab:*' fzf-completion yes
-
-load_nvm() {
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-}
-znap function nvm npm node npx nvim pm2 air task load_nvm
-
-# Cache and evaluate the string output asynchronously
-znap eval bun-completions 'bun completions'
-
-# Cache Docker completions via Znap
-znap fpath _docker 'docker completion zsh'
+  # load these at hypersonic load speeds with zsh-defer
+  "romkatv/zsh-defer"
+  "zdharma-continuum/fast-syntax-highlighting"
+)
+plugin-load $plugins
 
 # History file configuration
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
@@ -52,8 +36,15 @@ setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 setopt inc_append_history     # add commands to HISTFILE in order of execution
 
-
 # Key bindings
+
+# peterhurford/up.zsh
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# zsh-users/zsh-autosuggestions
+bindkey '^ ' autosuggest-accept # Ctrl + Space to accept suggestion
+
 # ctrl+arrows
 bindkey "\e[1;5C" forward-word
 bindkey "\e[1;5D" backward-word
