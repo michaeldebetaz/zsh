@@ -22,6 +22,11 @@ plugins=(
 )
 plugin-load $plugins
 
+# Pure prompt configuration
+zstyle :prompt:pure:git:stash show yes
+zstyle :prompt:pure:environment:node_version show yes
+zstyle :prompt:pure:git:dirty detailed yes
+
 # History configuration
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
 HISTSIZE=12000
@@ -34,14 +39,11 @@ setopt hist_verify            # show command with history expansion to user befo
 setopt inc_append_history     # add commands to HISTFILE in order of execution
 
 # Key bindings
-
 # zsh-users/zsh-history-substring-search
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
-
 # zsh-users/zsh-autosuggestions
 bindkey '^ ' autosuggest-accept # Ctrl + Space to accept suggestion
-
 # ctrl+arrows
 bindkey "\e[1;5C" forward-word
 bindkey "\e[1;5D" backward-word
@@ -52,7 +54,7 @@ bindkey '^H' backward-kill-word
 # ctrl+shift+delete
 bindkey "\e[3;6~" kill-line
 
-# Custom aliases
+# Aliases
 alias zshc="cd ~/.config/zsh"
 alias nvimc="cd ~/.config/nvim"
 alias tmuxc="cd ~/.config/tmux"
