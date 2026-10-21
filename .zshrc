@@ -13,22 +13,19 @@ source $ZPLUGINDIR/zsh_unplugged/zsh_unplugged.zsh
 # make a github repo plugins list
 plugins=(
   "sindresorhus/pure"
-  "zsh-users/zsh-autosuggestions"
-  "zsh-users/zsh-history-substring-search"
+  "zsh-users/zsh-completions"
   "mattmc3/ez-compinit"
-
-  # load these at hypersonic load speeds with zsh-defer
-  "romkatv/zsh-defer"
+  "Aloxaf/fzf-tab"
+  "zsh-users/zsh-autosuggestions"
   "zdharma-continuum/fast-syntax-highlighting"
+  "zsh-users/zsh-history-substring-search"
 )
 plugin-load $plugins
 
-# History file configuration
+# History configuration
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
-HISTSIZE=1000
+HISTSIZE=12000
 SAVEHIST=10000
-
-# History command configuration
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 setopt hist_ignore_dups       # ignore duplicated commands history list
@@ -38,9 +35,9 @@ setopt inc_append_history     # add commands to HISTFILE in order of execution
 
 # Key bindings
 
-# peterhurford/up.zsh
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+# zsh-users/zsh-history-substring-search
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
 
 # zsh-users/zsh-autosuggestions
 bindkey '^ ' autosuggest-accept # Ctrl + Space to accept suggestion
@@ -60,5 +57,3 @@ alias zshc="cd ~/.config/zsh"
 alias nvimc="cd ~/.config/nvim"
 alias tmuxc="cd ~/.config/tmux"
 alias ls="ls --color=auto"
-
-# zprof
